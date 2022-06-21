@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import React from 'react';
 import './App.css';
 import ErrorMessage from './ErrorMessage';
@@ -10,26 +11,26 @@ const initialValues = {
       phone: '',
 }
 
-const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 const ALPHABET_REGEX  = /^[A-Za-z]+$/i;
 const PHONE_REGEX = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i;
 
 function UserForm({submitHandler}) {
 
-      const validate = ({email, name, phone})=>{
-            let errors = {};
+      const validationSchema = Yup.object({
+            email: Yup.string()
+                  .required('Required')
+                  .email('Invalid email address'),
+            
+            name: Yup.string()
+                  .required('Required')
+                  .matches(ALPHABET_REGEX, 'Invalid name'),
 
-            if (!email) errors.email = 'Required';
-            else if (!EMAIL_REGEX.test(email)) errors.email = 'Invalid email address';
+            phone: Yup.string()
+                  .required('Required')
+                  .matches(PHONE_REGEX, 'Invalid phone'),
+      })
 
-            if (!name) errors.name = 'Required';
-            else if (!ALPHABET_REGEX.test(name)) errors.name = 'Invalid name';
-
-            if (!phone) errors.phone = 'Required';
-            else if (!PHONE_REGEX.test(phone)) errors.phone = 'Invalid phone';
-
-            return errors;
-      }
+      
       
       const resetHandler = ()=>{
             formik.resetForm();
@@ -39,7 +40,7 @@ function UserForm({submitHandler}) {
 
       const formik = useFormik({
             initialValues,
-            validate,
+            validationSchema,
             onSubmit: submitHandler,
       });
 
