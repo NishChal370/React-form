@@ -7,6 +7,15 @@
       npm i formik      
 ```
 
+## To install Yup
+
+
+```javascript
+      npm i yup
+```
+
+It is used for validation form inputs
+
 
 ## To install nanoid
 
