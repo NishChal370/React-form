@@ -3,18 +3,17 @@
 
 ## To install Formik
 
-
-      ```javascript 
+```javascript
       npm i formik      
-      ```
+```
 
 
 ## To install nanoid
 
 
-      ```javascript 
+```javascript
       npm i nanoid  
-      ```
+```
 
 It is used to generate unique id/key.
 
